@@ -1,0 +1,98 @@
+[gd_scene load_steps=17 format=3 uid="uid://cjkl50qae2djb"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_t5vsn"]
+[ext_resource type="PackedScene" uid="uid://ps7q8qdfhct4" path="res://tree.glb" id="2_6gimi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jij10"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_lryi7"]
+sky_material = SubResource("ProceduralSkyMaterial_jij10")
+
+[sub_resource type="Environment" id="Environment_ds5w5"]
+background_mode = 2
+sky = SubResource("Sky_lryi7")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p3ll5"]
+albedo_color = Color(0.552956, 0.552956, 0.552956, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y0s8l"]
+material = SubResource("StandardMaterial3D_p3ll5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jiqt1"]
+albedo_color = Color(0.568213, 0.0844882, 0.128222, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_5b4eu"]
+material = SubResource("StandardMaterial3D_jiqt1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emtel"]
+albedo_color = Color(0.41, 0.18245, 0.041, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2eusl"]
+material = SubResource("StandardMaterial3D_emtel")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ng7f"]
+albedo_color = Color(0.242131, 0.161026, 0.795916, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tmlcy"]
+material = SubResource("StandardMaterial3D_0ng7f")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5pqm1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xbqa5"]
+albedo_color = Color(0.273873, 0.273873, 0.273873, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qbruy"]
+material = SubResource("StandardMaterial3D_xbqa5")
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ds5w5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="House" type="MeshInstance3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 3.03082, 0)
+mesh = SubResource("BoxMesh_y0s8l")
+
+[node name="Roof" type="MeshInstance3D" parent="House"]
+transform = Transform3D(1.19024, 0, 0, 0, 1.00089, 0, 0, 0, 1.2722, 0, 0.983283, 0)
+mesh = SubResource("PrismMesh_5b4eu")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(39.9329, 0, 0, 0, 1.00396, 0, 0, 0, 39.0985, 0, 0, 0)
+mesh = SubResource("PlaneMesh_2eusl")
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(0.905547, 0, -0.424247, 0, 1, 0, 0.424247, 0, 0.905547, 3.6087, 0, 11.0508)
+script = ExtResource("1_t5vsn")
+
+[node name="Body" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.960322, 0)
+mesh = SubResource("CapsuleMesh_tmlcy")
+
+[node name="Nose" type="MeshInstance3D" parent="Player/Body"]
+transform = Transform3D(0.30857, 0, 0, 0, -0.00180071, 0.341198, 0, -0.229267, -0.00267983, 0, 0.479071, -0.539202)
+mesh = SubResource("CapsuleMesh_5pqm1")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(0.984267, 0, 0.17669, 0, 1, 0, -0.17669, 0, 0.984267, 0.195315, 2.13599, 3.32918)
+
+[node name="Street1" type="MeshInstance3D" parent="."]
+transform = Transform3D(39.6512, 0, 0, 0, 0.999999, 0, 0, 0, 2.19198, 0, 0.01, 7.372)
+mesh = SubResource("PlaneMesh_qbruy")
+
+[node name="Street2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.54523e-06, 0, 2.19198, 0, 0.999999, 0, -35.3508, 0, -9.58143e-08, 7.2041, 0.01, -2.93958)
+mesh = SubResource("PlaneMesh_qbruy")
+
+[node name="TreeNode" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="tree" parent="TreeNode" instance=ExtResource("2_6gimi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.9332, -0.0890198, 3.24006)
