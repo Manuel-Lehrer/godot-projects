@@ -11,6 +11,7 @@ func _process(delta):
 	var h = speed * delta
 	if Input.is_key_pressed(KEY_UP):
 		position.x -= h * sin(rotation.y)
+		print(rotation.y)
 		position.z -= h * cos(rotation.y)
 	if Input.is_key_pressed(KEY_DOWN):
 		position.x += h * sin(rotation.y)
