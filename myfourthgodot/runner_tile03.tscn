@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4qninbpxcpne"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_my83r"]
+size = Vector3(10, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qvu4h"]
+albedo_color = Color(0, 0.376471, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pkngt"]
+material = SubResource("StandardMaterial3D_qvu4h")
+size = Vector3(10, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fe7vw"]
+albedo_color = Color(1, 0.890196, 0.12549, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5vc7u"]
+material = SubResource("StandardMaterial3D_fe7vw")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sbs5l"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_my83r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_pkngt")
+
+[node name="Area3D2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1.03205e-08, -1, 0, 0.236105, -4.37114e-08, 0.632798, 1.11751, -0.372289)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D2"]
+mesh = SubResource("CylinderMesh_5vc7u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+shape = SubResource("CylinderShape3D_sbs5l")
+
+[node name="Area3D3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1.03205e-08, -1, 0, 0.236105, -4.37114e-08, 0.632798, 1.11751, -2.31095)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D3"]
+mesh = SubResource("CylinderMesh_5vc7u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D3"]
+shape = SubResource("CylinderShape3D_sbs5l")
+
+[node name="Area3D4" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1.03205e-08, -1, 0, 0.236105, -4.37114e-08, 0.632798, 1.11751, -4.51692)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D4"]
+mesh = SubResource("CylinderMesh_5vc7u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D4"]
+shape = SubResource("CylinderShape3D_sbs5l")
