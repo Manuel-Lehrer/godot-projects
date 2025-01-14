@@ -1,0 +1,10 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1736857942
+icon.svg::CompressedTexture2D::2368914140977055439::1736255678::1736255683::1::::<><>::
+main.gd::GDScript::-1::1736856089::0::1::::<>Node3D<>::
+main.tscn::PackedScene::4852782447361118742::1736857571::0::1::::<><>::res://player.gd<>res://main.gd<>uid://2oy2aiaxfhbk::::res://runner_tile.tscn<>uid://bgw7c1kwria6k::::res://runner_tile_02.tscn<>uid://c4qninbpxcpne::::res://runner_tile03.tscn
+player.gd::GDScript::-1::1736259723::0::1::::<>CharacterBody3D<>::
+runner_tile03.tscn::PackedScene::6842152169272020634::1736857571::0::1::::<><>::
+runner_tile.gd::GDScript::-1::1736856089::0::1::::<>Node3D<>::
+runner_tile.tscn::PackedScene::1925505503434914272::1736857571::0::1::::<><>::res://runner_tile.gd
+runner_tile_02.tscn::PackedScene::2854917953544707512::1736857622::0::1::::<><>::
