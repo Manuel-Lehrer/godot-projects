@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbeyvakiia0bq"]
+[gd_scene load_steps=14 format=3 uid="uid://cbeyvakiia0bq"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_hh76p"]
 [ext_resource type="Script" path="res://main.gd" id="1_lcdjj"]
 [ext_resource type="PackedScene" uid="uid://2oy2aiaxfhbk" path="res://runner_tile.tscn" id="2_23rli"]
 [ext_resource type="PackedScene" uid="uid://bgw7c1kwria6k" path="res://runner_tile_02.tscn" id="3_25ldw"]
 [ext_resource type="PackedScene" uid="uid://c4qninbpxcpne" path="res://runner_tile03.tscn" id="4_rj3tm"]
+[ext_resource type="Script" path="res://canvas_layer.gd" id="6_2raab"]
+[ext_resource type="Script" path="res://coin_ui.gd" id="7_fyxqj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tdvic"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,6 +22,12 @@ tonemap_mode = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ibbr"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h0hgj"]
+albedo_color = Color(0.336567, 0.191773, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8ts0v"]
+material = SubResource("StandardMaterial3D_h0hgj")
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_lcdjj")
 tiles = Array[PackedScene]([ExtResource("2_23rli"), ExtResource("3_25ldw"), ExtResource("4_rj3tm")])
@@ -28,15 +36,68 @@ tiles = Array[PackedScene]([ExtResource("2_23rli"), ExtResource("3_25ldw"), ExtR
 environment = SubResource("Environment_nb7r1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 4.06015)
 shadow_enabled = true
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="Player" type="CharacterBody3D" parent="." groups=["coin + player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4.06575)
 script = ExtResource("1_hh76p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.06015)
 shape = SubResource("CapsuleShape3D_0ibbr")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.06015)
+mesh = SubResource("CapsuleMesh_8ts0v")
+
 [node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.994458, 0.105136, 0, -0.105136, 0.994458, 0, 0.475665, 0)
+transform = Transform3D(1, 0, 0, 0, 0.610062, 0.792354, 0, -0.792354, 0.610062, 0, 5.82255, 7.9418)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 280.0
+offset_bottom = 51.0
+script = ExtResource("7_fyxqj")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 51.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 8.0
+offset_right = 269.0
+offset_bottom = 44.0
+theme_override_font_sizes/bold_italics_font_size = 10
+bbcode_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("6_2raab")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 747.0
+offset_bottom = 507.0
+
+[node name="DeathScreen" type="Panel" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/DeathScreen"]
+layout_mode = 0
+offset_left = 327.0
+offset_top = 199.0
+offset_right = 873.0
+offset_bottom = 524.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 57
+text = "YOU DIED!"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,4 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4qninbpxcpne"]
+[gd_scene load_steps=9 format=3 uid="uid://c4qninbpxcpne"]
+
+[ext_resource type="PackedScene" uid="uid://c7fdlx5x2jlg0" path="res://coin.tscn" id="1_gcjw6"]
+[ext_resource type="Script" path="res://obstacle.gd" id="1_jeqnj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_my83r"]
 size = Vector3(10, 1, 20)
@@ -10,13 +13,13 @@ albedo_color = Color(0, 0.376471, 1, 1)
 material = SubResource("StandardMaterial3D_qvu4h")
 size = Vector3(10, 1, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fe7vw"]
-albedo_color = Color(1, 0.890196, 0.12549, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4m8uj"]
+albedo_color = Color(1, 0.0784314, 0.709804, 1)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_5vc7u"]
-material = SubResource("StandardMaterial3D_fe7vw")
+[sub_resource type="SphereMesh" id="SphereMesh_8qiqp"]
+material = SubResource("StandardMaterial3D_4m8uj")
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_sbs5l"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_ybw8n"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -29,29 +32,26 @@ shape = SubResource("BoxShape3D_my83r")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("BoxMesh_pkngt")
 
-[node name="Area3D2" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1.03205e-08, -1, 0, 0.236105, -4.37114e-08, 0.632798, 1.11751, -0.372289)
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2.70042, 0, 0, 0, 4.77274, 0, 0, 0, 9.44908, 0, 0, 0)
+script = ExtResource("1_jeqnj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D2"]
-mesh = SubResource("CylinderMesh_5vc7u")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_8qiqp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
-shape = SubResource("CylinderShape3D_sbs5l")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_ybw8n")
 
-[node name="Area3D3" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1.03205e-08, -1, 0, 0.236105, -4.37114e-08, 0.632798, 1.11751, -2.31095)
+[node name="Coin" parent="." instance=ExtResource("1_gcjw6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08155, 7.24402)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D3"]
-mesh = SubResource("CylinderMesh_5vc7u")
+[node name="Coin2" parent="." instance=ExtResource("1_gcjw6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.082, 1.825)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D3"]
-shape = SubResource("CylinderShape3D_sbs5l")
+[node name="Coin3" parent="." instance=ExtResource("1_gcjw6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.082, 1.825)
 
-[node name="Area3D4" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1.03205e-08, -1, 0, 0.236105, -4.37114e-08, 0.632798, 1.11751, -4.51692)
+[node name="Coin4" parent="." instance=ExtResource("1_gcjw6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.082, -6.6795)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D4"]
-mesh = SubResource("CylinderMesh_5vc7u")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D4"]
-shape = SubResource("CylinderShape3D_sbs5l")
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

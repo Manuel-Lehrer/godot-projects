@@ -1,36 +1,36 @@
 extends Node3D
 
 @export var tiles: Array[PackedScene]
-@export var title_length = 20.0
-@export var tile_rim = 5.0
+@export var tile_length = 20.0
+@export var tile_rim = 15.0
+@export var max_tiles = 5 
+@export var spawn_offset = 10.0 
+
 
 var current_tile_center = 10
-var current_tile: Node3D
-var last_tile: Node3D
+var active_tiles = [] 
 
-func spawn_next() -> Node3D:
+func spawn_next():
 	var tile_node = tiles.pick_random().instantiate()
 	add_child(tile_node)
-	current_tile_center -= title_length
+	current_tile_center -= tile_length
 	tile_node.position.z = current_tile_center
-	return tile_node
+	active_tiles.append(tile_node)
 	
-func kill_tile(tile:Node3D):
+
+	if active_tiles.size() > max_tiles:
+		var old_tile = active_tiles.pop_front()
+		kill_tile(old_tile)
+
+func kill_tile(tile: Node3D):
 	remove_child(tile)
 	tile.queue_free()
-	
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	spawn_next()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if $Player.position.z < current_tile_center - title_length / 2 + tile_rim:
-		if last_tile != null:
-			kill_tile(last_tile)
-		last_tile = current_tile
+	for i in range(max_tiles):
 		spawn_next()
-		current_tile = spawn_next()
+
+func _process(delta: float) -> void:
+	if $Player.position.z < current_tile_center - tile_length / 2 + tile_rim + spawn_offset:
+		spawn_next()
+		
